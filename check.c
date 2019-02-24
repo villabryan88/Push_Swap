@@ -6,12 +6,12 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:37:02 by bvilla            #+#    #+#             */
-/*   Updated: 2019/02/20 15:19:48 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/02/22 13:26:35 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
-# define MAP_SIZE 500000
+# define MAP_SIZE 500
 
 int		check_repeat(int *nums, int len)
 {
@@ -38,7 +38,6 @@ int		check_repeat(int *nums, int len)
 
 	return (0);
 }
-
 
 int		is_valid_input(char **str)
 {

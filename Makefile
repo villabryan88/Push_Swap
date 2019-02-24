@@ -6,7 +6,7 @@
 #    By: bvilla <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/22 20:11:16 by bvilla            #+#    #+#              #
-#    Updated: 2019/02/19 21:05:27 by bvilla           ###   ########.fr        #
+#    Updated: 2019/02/22 17:20:17 by bvilla           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ OBJS = $(SOURCE:%.c=%.o)
 
 $(NAME):
 	@make re -C libft/ 
-	@gcc -c $(SOURCE) -I. -I libft/
-	@gcc $(OBJS) -Wall -Wextra -Werror libft/libft.a -o $(NAME)
+	@gcc -c -g $(SOURCE) -I. -I libft/
+	@gcc -g $(OBJS) -Wall -Wextra -Werror libft/libft.a -o $(NAME)
 	@echo "compilation complete"
 all: $(NAME)
 clean:
