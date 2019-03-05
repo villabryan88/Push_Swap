@@ -6,7 +6,7 @@
 #    By: bvilla <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/22 20:11:16 by bvilla            #+#    #+#              #
-#    Updated: 2019/02/20 13:59:51 by bvilla           ###   ########.fr        #
+#    Updated: 2019/03/04 18:19:11 by bvilla           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,15 +31,21 @@ SOURCE = ft_memset.c ft_putchar.c ft_putnbr.c ft_putstr.c \
 		 ft_lstadd.c ft_lstiter.c ft_lstmap.c \
 		 ft_splitstr.c ft_strtoupper.c ft_strjoin_free.c \
 		 ft_arrlen.c ft_strisnum.c ft_strisint.c \
-		 ft_elemval.c ft_lstsearch.c
+		 ft_elemval.c ft_lstsearch.c get_next_line.c
 
-VPATH = srcs	 
-HEADERS = includes
-OBJS = $(SOURCE:%.c=%.o)
+PRINTF_FILES = ft_printf.c ft_itoa_base.c get_args.c is_cond.c str_manip.c floats.c \
+		 dioux.c str_math.c format_float.c flip_flags.c 
+
+PRINTF_PATH = printf
+PRINTF_SOURCE = $(PRINTF_FILES:%=$(PRINTF_PATH)/%)
+
+HEADERS = .
+OBJS = $(SOURCE:%.c=%.o) $(PRINTF_FILES:%.c=%.o)
+
 $(NAME): 
 	@echo "compiling library"
-	@gcc -Wall -Wextra -Werror -c $(SOURCE) -I$(HEADERS) 
-	@ar rc $(NAME) $(OBJS)
+	@gcc -g -Wall -Wextra -Werror -c $(SOURCE) $(PRINTF_SOURCE) -I $(HEADERS) 
+	@ar rc $(NAME) $(OBJS) $
 	@ranlib $(NAME)
 clean:
 	@rm -f $(OBJS)

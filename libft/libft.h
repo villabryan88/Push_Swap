@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 20:07:39 by bvilla            #+#    #+#             */
-/*   Updated: 2019/02/20 14:00:56 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/04 17:24:53 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,6 @@ int					ft_strisnum(char *s);
 int					ft_strisint(char *s);
 int					ft_elemval(void *arr, size_t size);
 t_list				*ft_lstsearch(t_list *list, void *needle, size_t size);
+int					ft_printf(char *s, ...);
+int					get_next_line(const int fd, char **line);
 #endif
