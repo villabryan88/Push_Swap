@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/04 21:37:48 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/05 00:52:14 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ t_node				*pop(t_stack *stack);
 void				unshift(t_stack *stack, t_node *new_node);
 t_node				*new_node(int val);
 void				print_stack(t_stack *stack);
-void				swap(int i, t_stack **stacks);
-int					push(int i, t_stack **stacks);
-void				rotate(int i, t_stack **stacks);
-void				reverse(int i, t_stack **stacks);
+void				swap(int i, t_stack **stacks, int ver);
+int					push(int i, t_stack **stacks, int ver);
+void				rotate(int i, t_stack **stacks, int ver);
+void				reverse(int i, t_stack **stacks, int ver);
 int					*arr_str_to_int(char **str, int *len);
 int					*parse_nums(int ac, char **av, int *len);
 void				populate_stack(int *nums, int len, t_stack **stacks);

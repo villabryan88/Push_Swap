@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:37:02 by bvilla            #+#    #+#             */
-/*   Updated: 2019/02/22 13:26:35 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/04 22:14:31 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		is_valid_input(char **str)
 {
 	while (*str)
 	{
-		if (!ft_strisnum(*str) || !ft_strisint(*str))
+		if (!ft_strisint(*str))
 			return (0);
 		str++;
 	}
