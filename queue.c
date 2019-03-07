@@ -6,7 +6,7 @@
 /*   By: exam <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:36:11 by exam              #+#    #+#             */
-/*   Updated: 2019/03/04 19:52:32 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/05 21:15:47 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void *dequeue(struct s_queue *queue)
 	queue->first = queue->first->next;
 	if (queue->first == NULL)
 		queue->last = NULL;
+	free(first);
 	return (content);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/05 00:52:14 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/06 21:26:14 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int					check_repeat(int *nums, int len);
 int					is_valid_input(char **str);
 int					isEmpty(t_stack *stack);
 int					peek(t_stack *stack);
+int					peek2(t_stack *stack);
 t_stack				*init(void);
 t_node				*pop(t_stack *stack);
 void				unshift(t_stack *stack, t_node *new_node);
@@ -58,4 +59,6 @@ struct				s_queue *init_q(void);
 void				enqueue(struct s_queue *queue, void *content);
 void				*dequeue(struct s_queue *queue);
 void				*peek_q(struct s_queue *queue);
+int					stack_len(t_stack *stack);
+void				print_stacks(t_stack **stacks);
 #endif

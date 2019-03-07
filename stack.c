@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 15:06:19 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/04 14:49:03 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/06 21:25:50 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ int peek(t_stack *stack)
 	if (isEmpty(stack))
 		return (0);
 	return (stack->top->val);
+}
+
+int peek2(t_stack *stack)
+{
+	if (isEmpty(stack))
+		return (0);
+	return (stack->top->next->val);
 }
 
 t_stack *init(void)

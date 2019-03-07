@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:17:25 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/05 19:10:38 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/06 13:29:13 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,33 @@
 int		do_instruction(char *s, t_stack **stacks)
 {
 	int		len;
-	int		ok;
+	int		ret;
 	static int i = 1;
 
-	ok = 1;
+	ret = 1;
 	len = ft_strlen(s);
 	if (len > 3 || len < 2)
-		return (0);
-	if (len == 3)
+		ret = 0;
+	else if (len == 3)
 	{
 		if (s[0] != 'r' || s[1] != 'r' || (s[2] != 'a' && s[2] != 'b'))
-			return (0);
-		reverse(s[2] - 'a', stacks, 0);
-		return (1);
+			ret = 0;
+		else 
+			reverse(s[2] - 'a', stacks, 0);
+			ret = 1;
 	}
-	if (s[1] != 'a' && s[1] != 'b')
-		return (0);
-	if (s[0] == 'r')
+	else if (s[1] != 'a' && s[1] != 'b')
+		ret = 0;
+	else if (s[0] == 'r')
 		rotate(s[1] - 'a', stacks, 0);
 	else if (s[0] == 'p')
-		ok = push(s[1] - 'a', stacks, 0);
+		ret = push(s[1] - 'a', stacks, 0);
 	else if (s[0] == 's')
 		swap(s[1] - 'a', stacks, 0);
 	else
-		return (0);
-	return (1);
+		ret = 0;
+	free (s);
+	return (ret);
 }
 
 int		run_instructions(t_stack **stacks)
@@ -48,13 +50,18 @@ int		run_instructions(t_stack **stacks)
 	char	*op;
 	int		ok;
 	t_queue	*ops;
+	int		gnl;
 
 	ops = init_q();
-	while(get_next_line(0, &line) > 0)
+	while((gnl = get_next_line(0, &line)) > 0)
 		enqueue(ops, line);
 	while ((op = dequeue(ops)))
 		if(!(ok = do_instruction(op, stacks)))
+		{
+			free(ops);
 			return (ok);
+		}
+	free(ops);
 	return (ok);
 }
 
@@ -62,6 +69,7 @@ int		check_order(t_stack **stacks)
 {
 	int		prev;
 	int		curr;
+	t_node	*node;
 
 	if(!isEmpty(stacks[1]))
 	{
@@ -69,11 +77,17 @@ int		check_order(t_stack **stacks)
 		return (0);
 	}
 	if (!isEmpty(stacks[0]))
-		curr = pop(stacks[0])->val;
+	{
+		node = pop(stacks[0]);
+		curr = node->val;
+		free(node);
+	}
 	while (!isEmpty(stacks[0]))
 	{
 		prev = curr;
-		curr = pop(stacks[0])->val;
+		node = pop(stacks[0]);
+		curr = node->val;
+		free(node);
 		if (curr < prev)
 		{
 		 	ft_putendl("KO");

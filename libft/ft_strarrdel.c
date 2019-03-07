@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_strarrdel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/04 18:49:34 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 00:16:30 by bvilla           ###   ########.fr       */
+/*   Created: 2019/03/05 21:56:37 by bvilla            #+#    #+#             */
+/*   Updated: 2019/03/05 23:38:54 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include "libft/get_next_line.h"
-#include "libft/ft_printf.h"
-#include <stdio.h>
-#include <fcntl.h>
-#include "push_swap.h"
+#include "libft.h"
 
-int		main()
+void	ft_strarrdel(char **str_arr)
 {
-	ft_printf("t_list size: %lu\n", sizeof(t_list));
+	int		i;
 
-	ft_printf("t_stack size: %lu\n", sizeof(t_stack));
-	ft_printf("t_node size: %lu\n", sizeof(t_node));
+	i = 0;
+	while (str_arr[i])
+	{
+		free(str_arr[i]);
+		i++;
+	}
+	free(str_arr);
 }

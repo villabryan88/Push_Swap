@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:19:15 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/04 16:48:41 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/06 00:33:27 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,16 @@ int		*parse_nums(int ac, char **av, int *len)
 		str = ft_strjoin_free(str, " ", 1, 0);
 	}
 	str_nums = ft_strsplit(str, ' ');
+	free(str);
 	nums = arr_str_to_int(str_nums, len);
+
 	if(!is_valid_input(str_nums) || check_repeat(nums, *len))
+	{
+		ft_strarrdel(str_nums);
+		free(nums);
 		return (NULL);
+	}
+	ft_strarrdel(str_nums);
 	return (nums);
 }
 
