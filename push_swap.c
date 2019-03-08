@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 22:34:21 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/07 00:30:38 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,41 @@ void	split_presort(t_stack **stacks, int ab, int len)
 
 void	final_merge(t_stack **stacks)
 {
+	int		side;
+	int		prev[2];
+	int		curr[2];
+	side = 0;
+	prev[0] = peek(stacks[0]);
+	prev[1] = peek(stacks[1]);
+	curr[0] = peek(stacks[0]);
+	curr[1] = peek(stacks[1]);
+	while (!isEmpty(stacks[1]))
+	{
+		if(prev[side] <= curr[side] && 
+				(prev[(side + 1) % 2] > curr[(side + 1) % 2] || curr[side] < curr[(side + 1) % 2]))
+		{
+			prev[side] = peek(stacks[side]);
+			rotate(side, stacks, 1);
+			curr[side] = peek(stacks[side]);
+		}
+		else if (prev[(side + 1) % 2] <= curr[(side + 1) % 2])
+		{
+			prev[(side + 1) % 2] = peek(stacks[(side + 1) % 2]);
+			push(side, stacks, 1);
+			rotate(side, stacks, 1);
+			curr[(side + 1) % 2] = peek(stacks[(side + 1) % 2]);
+		}
+		if (prev[side] > curr[side] && prev[(side + 1) % 2] > curr[(side + 1) % 2])
+		{
+			side = (side + 1) % 2;
+			prev[0] = peek(stacks[0]);
+			prev[1] = peek(stacks[1]);
+			curr[0] = peek(stacks[0]);
+			curr[1] = peek(stacks[1]);
 
+		}
+
+	}	
 }
 
 int		main(int ac, char **av)
@@ -107,7 +141,8 @@ int		main(int ac, char **av)
 	}
 	populate_stack(nums, len, stacks);
 	split_presort(stacks, 0, len);
+//	final_merge(stacks);
 	print_stacks(stacks);
-
+	
 	return (0);
 }
