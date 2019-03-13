@@ -6,13 +6,13 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 15:37:27 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 21:33:02 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/13 13:02:32 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-void	swap(int i, t_stack **stacks, int ver)
+int		swap(int i, t_stack **stacks, int ver)
 {
 	int		first;
 	int		second;
@@ -27,6 +27,7 @@ void	swap(int i, t_stack **stacks, int ver)
 		swap('s' - 'a', stacks, ver);
 	if (ver && i >= 0)
 		ft_printf("s%c\n", i + 'a');
+	return (1);
 }
 
 int		push(int i, t_stack **stacks, int ver)
@@ -46,7 +47,7 @@ int		push(int i, t_stack **stacks, int ver)
 	return (1);
 }
 
-void	rotate(int i, t_stack **stacks, int ver)
+int		rotate(int i, t_stack **stacks, int ver)
 {
 	int		c;
 
@@ -56,9 +57,10 @@ void	rotate(int i, t_stack **stacks, int ver)
 		rotate('r' - 'a', stacks, ver);
 	if (ver && i >= 0)
 		ft_printf("r%c\n", i + 'a');
+	return (1);
 }
 
-void	reverse(int	i, t_stack **stacks, int ver)
+int		reverse(int	i, t_stack **stacks, int ver)
 {
 	int		c;
 
@@ -68,4 +70,5 @@ void	reverse(int	i, t_stack **stacks, int ver)
 		rotate('r' - 'a', stacks, ver);
 	if (ver && i >= 0)
 		ft_printf("rr%c\n", i + 'a');
+	return (1);
 }

@@ -6,127 +6,175 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/07 00:30:38 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/13 14:35:28 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
+#define OPP(side) (side + 1) % 2
 
-int		presort(t_stack **stacks, int ab, int len, int both)
+int		inc_comp(t_stack **stacks, int side, int top_vals[2], void *data)
 {
-	if (len == 1)
+	if (!stacks || side != 0 || !data)
+		return (0);
+	if (top_vals[0] > top_vals[1])
+		return (0);
+	else
 		return (1);
-	if (len <= 2)
-	{
-		if (peek(stacks[ab]) > peek2(stacks[ab]))
-		{
-			if (both && peek(stacks[(ab + 1) % 2]) > peek2(stacks[(ab + 1) % 2]))
-				swap(-1, stacks, 1);
-			else
-				swap(ab, stacks, 1);
-		}
-		return (1);
-	}
-	return (0);
 }
 
-void	merge(t_stack **stacks, int ab, int remain, int sent)
+
+
+int		block_iter(t_stack **stacks, t_block block, void *data, int (*f)(t_stack**, int, int[2], void*))
 {
 	int		i;
-	int		c;
+	int		top_vals[2];
+	t_node	*top_elems[2];
+	int		ret;
+	int		counter;
 
+	counter = 0;
+	if(!data)
+		return (0);
+	top_elems[0] = stacks[block.side]->top;
+	top_elems[1] = stacks[block.side]->top->next;
 	i = 0;
-	c = 0;
-	while (i < remain || c < sent)
+	while (i < block.len)
 	{
-		if((i < remain && (c == sent || peek(stacks[ab]) < peek(stacks[(ab + 1) % 2]))))
-		{
-			rotate(ab, stacks, 1);
-			i++;
-		}
-		else if (c < sent)
-		{
-			push(ab, stacks, 1);
-			rotate(ab, stacks, 1);
-			c++;
-		}
+		top_vals[0] = top_elems[0]->val;
+		top_vals[1] = top_elems[1]->val;
+		if (!(ret = f(stacks, block.side, top_vals, data)))
+			return (0);
+		else if (ret == 2)
+			counter++;
+		top_elems[0] = top_elems[0]->next;
+		top_elems[1] = top_elems[1]->next; 
+		i++;
 	}
+	return (1);
 }
 
-void	split_presort(t_stack **stacks, int ab, int len)
+int		block_rotate_iter(t_stack **stacks, t_block block, void *data, 
+		int (*f)(t_stack**, int, void*))
 {
+	int		i;
+	int		side;
+	int		top_val;
+	int		moved;
+	int		counter;
+
+	counter = 0;
+
+	if(!data)
+		return (0);
+	side = block.side;
+	i = 0;
+	while (i < block.len)
+	{
+		if (!(moved = f(stacks, side, data)))
+			return (0);
+		else if (moved == 1)
+			rotate(side, stacks, 1);
+		else
+			counter++;
+		i++;
+	}
+	return (counter);
+}
+int		block_reverse_iter(t_stack **stacks, t_block block, void *data, 
+		int (*f)(t_stack**, int, void*))
+{
+	int		i;
+	int		side;
+	int		top_val;
+	int		moved;
+
+	if(!data)
+		return (0);
+	side = block.side;
+	i = 0;
+	while (i < block.len)
+	{
+		if (!(moved = f(stacks, side, data)))
+			return (0);
+		else if (moved == 1)
+			reverse(side, stacks, 1);
+		i++;
+	}
+	return (1);
+}
+
+
+int		is_block_sorted(t_stack *stack, int len)
+{
+	t_block blank;
+	blank.side = 0;
+	blank.len = len - 1;
+	return (block_iter(&stack, blank, (void*)1, inc_comp));
+}
+
+int		if_smaller_push(t_stack **stacks, int side, void *p_part)
+{
+	t_block *block;
+	int		*part;
+
+	part = p_part;
+
+	if (peek(stacks[side]) < *part)
+	{
+		push(OPP(side), stacks, 1);
+		return (2);
+	}
+	return (1);
+}
+
+int		rewind_until(t_stack **stacks, int side, void *p_part)
+{
+	t_block *block;
+	int		*part;
+
+	part = p_part;
+
+	if (peek(stacks[side]) == *part)
+		return (0);
+	return (1);
+}
+
+int		push_smaller(t_stack **stacks, int side, int len, int part)
+{
+	t_block block;
+	int		sent;
+
+	block.side = side;
+	block.len = len - 1;
+	rotate(side, stacks, 1);
+	sent = block_rotate_iter(stacks, block, &part, if_smaller_push);
+	block_reverse_iter(stacks, block, &part, rewind_until);	
+
+	return (sent);
+}
+
+void	quicksort(t_stack **stacks, int side, int len)
+{
+	int		partition;
 	int		sent;
 	int		remain;
-	int		i;
 
-	if (presort(stacks, ab, len, 1))
+	partition = peek(stacks[side]);
+
+	if (is_block_sorted(stacks[side], len))
 		return ;
-	sent = len / 2;
-	remain = len - sent;
-	i = 0;
-	while (i++ < sent)
-		push((ab + 1) % 2, stacks, 1);
-	split_presort(stacks, (ab + 1) % 2, sent);
-	while (remain > 2)
-	{
-		sent = remain / 2;
-		remain = remain - sent;
-		i = 0;
-		while (i++ < sent)
-			push((ab + 1) % 2, stacks, 1);
-		split_presort(stacks, (ab + 1) % 2, sent);
-	}
-	presort(stacks, ab, remain, 0);
-	merge(stacks, ab, remain, sent);
-}
+	sent = push_smaller(stacks, side, len, partition);
+	quicksort(stacks, OPP(side), sent);
 
-void	final_merge(t_stack **stacks)
-{
-	int		side;
-	int		prev[2];
-	int		curr[2];
-	side = 0;
-	prev[0] = peek(stacks[0]);
-	prev[1] = peek(stacks[1]);
-	curr[0] = peek(stacks[0]);
-	curr[1] = peek(stacks[1]);
-	while (!isEmpty(stacks[1]))
-	{
-		if(prev[side] <= curr[side] && 
-				(prev[(side + 1) % 2] > curr[(side + 1) % 2] || curr[side] < curr[(side + 1) % 2]))
-		{
-			prev[side] = peek(stacks[side]);
-			rotate(side, stacks, 1);
-			curr[side] = peek(stacks[side]);
-		}
-		else if (prev[(side + 1) % 2] <= curr[(side + 1) % 2])
-		{
-			prev[(side + 1) % 2] = peek(stacks[(side + 1) % 2]);
-			push(side, stacks, 1);
-			rotate(side, stacks, 1);
-			curr[(side + 1) % 2] = peek(stacks[(side + 1) % 2]);
-		}
-		if (prev[side] > curr[side] && prev[(side + 1) % 2] > curr[(side + 1) % 2])
-		{
-			side = (side + 1) % 2;
-			prev[0] = peek(stacks[0]);
-			prev[1] = peek(stacks[1]);
-			curr[0] = peek(stacks[0]);
-			curr[1] = peek(stacks[1]);
-
-		}
-
-	}	
 }
 
 int		main(int ac, char **av)
 {
 	int		*nums;
 	int		len;
-	int		ok;
 	t_stack	*stacks[2];
-	
-	ok = 1;
+
 	stacks[0] = init();
 	stacks[1] = init();
 	if (ac == 1)
@@ -140,9 +188,8 @@ int		main(int ac, char **av)
 		return (0);
 	}
 	populate_stack(nums, len, stacks);
-	split_presort(stacks, 0, len);
-//	final_merge(stacks);
+//	ft_printf("%d\n", is_block_sorted(stacks[0], len));
+	quicksort(stacks, 0, len);
 	print_stacks(stacks);
-	
 	return (0);
 }

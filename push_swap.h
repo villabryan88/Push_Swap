@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 21:26:14 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/12 18:38:46 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ typedef struct		s_queue {
 	struct s_qnode 	*last;
 }					t_queue;
 
+typedef struct		s_block {
+	int				side;
+	int				len;	
+}					t_block;
+
+typedef struct		s_stnode {
+	void			*content;
+	struct s_stnode	*next;
+}					t_stnode;
+
+typedef struct		s_real_stack {
+	struct s_stnode	*top;
+}					t_rstack;
+
+
 int					check_repeat(int *nums, int len);
 int					is_valid_input(char **str);
 int					isEmpty(t_stack *stack);
@@ -48,10 +63,10 @@ t_node				*pop(t_stack *stack);
 void				unshift(t_stack *stack, t_node *new_node);
 t_node				*new_node(int val);
 void				print_stack(t_stack *stack);
-void				swap(int i, t_stack **stacks, int ver);
+int					swap(int i, t_stack **stacks, int ver);
 int					push(int i, t_stack **stacks, int ver);
-void				rotate(int i, t_stack **stacks, int ver);
-void				reverse(int i, t_stack **stacks, int ver);
+int					rotate(int i, t_stack **stacks, int ver);
+int					reverse(int i, t_stack **stacks, int ver);
 int					*arr_str_to_int(char **str, int *len);
 int					*parse_nums(int ac, char **av, int *len);
 void				populate_stack(int *nums, int len, t_stack **stacks);
