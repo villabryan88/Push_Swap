@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/12 18:38:46 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/13 16:23:59 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,8 @@ void				*dequeue(struct s_queue *queue);
 void				*peek_q(struct s_queue *queue);
 int					stack_len(t_stack *stack);
 void				print_stacks(t_stack **stacks);
+int					bigger_than(t_stack *stack, void *p_part, t_stack *og, int len);
+int					find_best_part(t_stack *stack, void *p_part_bigger, t_stack *og, int len);
+int					best_partition(t_stack **stack, int side, int len);
+int					block_iter(t_stack *stack, int len, void *data, int (*f)(t_stack*, void*, t_stack*, int));
 #endif
