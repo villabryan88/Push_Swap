@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/14 00:52:31 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/14 18:40:55 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		block_rotate_iter(t_stack **stacks, t_block block, void *data,
 	while (i < block.len)
 	{
 		if (!(moved = f(stacks, side, data)))
-			return (0);
+			return (counter);
 		else if (moved == 1)
 			rotate(side, stacks, 1);
 		else
@@ -109,27 +109,33 @@ int		rewind_until(t_stack **stacks, int side, void *p_part)
 	return (1);
 }
 
-int		if_top_push(t_stack **stacks, int side, void *p_part)
+int		if_top_push(t_stack **stacks, int side, void *p_part_top_s_bot)
 {
 	t_block *block;
-	int		*part;
+	int		*part_top_s_bot;
+	static int ret = 0;
 
-	part = p_part;
-	if(side == 0)
+	part_top_s_bot = p_part_top_s_bot;
+	if (part_top_s_bot[1] + part_top_s_bot[3] == stack_len(stacks[side]))
+		ret = 1;
+	if (!part_top_s_bot[1])
 	{
-		if (peek(stacks[side]) < *part)
+		part_top_s_bot[3]--;
+		if (!part_top_s_bot[3])
 		{
-			push(OPP(side), stacks, 1);
-			return (2);
+			ret = 0;
+			return (1);
 		}
+		return (ret);
 	}
-	else
-		if (peek(stacks[side]) > *part)
-		{
-			push(OPP(side), stacks, 1);
-			return (2);
-		}
-
+	if((side == 0 && peek(stacks[side]) < *part_top_s_bot) 
+			|| (side == 1 && peek(stacks[side]) > *part_top_s_bot))
+	{
+		push(OPP(side), stacks, 1);
+		part_top_s_bot[1]--;
+		return (2);
+	}
+	part_top_s_bot[3]--;
 	return (1);
 }
 
@@ -164,25 +170,32 @@ int		push_top(t_stack **stacks, int side, int len, int part)
 	t_block block;
 	int		sent;
 	int		start_side[2];
+	int		part_top_side_bot[4];
 
 	start_side[0] = part;
 	start_side[1] = side;
 	start_side[0] = block_iter(stacks[side], len, &start_side, find_first);
 	block.side = side;
 	block.len = len;
-	sent = block_rotate_iter(stacks, block, &part, if_top_push);
+	part_top_side_bot[0] = part;
+	part_top_side_bot[2] = side;
+	part_top_side_bot[1] = block_iter(stacks[side], len, part_top_side_bot, above_than);
+	part_top_side_bot[3] = len - part_top_side_bot[1];
+	sent = block_rotate_iter(stacks, block, part_top_side_bot, if_top_push);
+//	print_stacks(stacks);
 	block_reverse_iter(stacks, block, &start_side, rewind_until);	
-
+//	print_stacks(stacks);
 	return (sent);
 }
+
 
 void	quicksort(t_stack **stacks, int side, int len)
 {
 	int		partition;
 	int		sent;
 	int		remain;
-	static int  i = 0;
-	i++;
+//	static int  i = 0;
+//	i++;
 //	print_stacks(stacks);
 	if (is_block_sorted(stacks, side, len))
 	{

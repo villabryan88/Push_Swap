@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/13 16:23:59 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/14 13:27:07 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ int					bigger_than(t_stack *stack, void *p_part, t_stack *og, int len);
 int					find_best_part(t_stack *stack, void *p_part_bigger, t_stack *og, int len);
 int					best_partition(t_stack **stack, int side, int len);
 int					block_iter(t_stack *stack, int len, void *data, int (*f)(t_stack*, void*, t_stack*, int));
+int					above_than(t_stack *stack, void *p_part_bigger_side, t_stack *og, int len);
 #endif
