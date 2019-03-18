@@ -5,7 +5,7 @@ if((scalar @ARGV) != 1)
 	exit;
 }
 
-my @range = (1..1000);
+my @range = (0..10);
 my $nb = $ARGV[0];
 my @res = rand_samp($nb, @range);
 print "@res";

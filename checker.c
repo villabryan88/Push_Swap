@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:17:25 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 13:29:13 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/16 19:37:29 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int		main(int ac, char **av)
 	stacks[1] = init();
 	if (ac == 1)
 	{
-		ft_putstr("ERROR\n");
 		return (0);
 	}
 	if(!(nums = parse_nums(ac, av, &len)))

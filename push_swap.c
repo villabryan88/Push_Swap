@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/14 18:40:55 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/16 23:43:17 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	quicksort(t_stack **stacks, int side, int len)
 	int		remain;
 //	static int  i = 0;
 //	i++;
-//	print_stacks(stacks);
+	print_stacks(stacks);
 	if (is_block_sorted(stacks, side, len))
 	{
 	//	ft_printf("level: %d side %c sorted\n", i, side + 'a');
