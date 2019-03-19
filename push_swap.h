@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/14 13:27:07 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/18 14:58:22 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,15 @@ typedef struct		s_queue {
 
 typedef struct		s_block {
 	int				side;
-	int				len;	
+	int				start;
+	int				len;
+	int				send;
+	int				remain;
+	int				part;
+	int				loc;	
 }					t_block;
 
-typedef struct		s_stnode {
-	void			*content;
-	struct s_stnode	*next;
-}					t_stnode;
 
-typedef struct		s_real_stack {
-	struct s_stnode	*top;
-}					t_rstack;
 
 
 int					check_repeat(int *nums, int len);

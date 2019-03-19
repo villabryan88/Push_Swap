@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/18 22:16:25 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/18 12:46:59 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,26 +182,46 @@ int		push_top(t_stack **stacks, int side, int len, int part)
 	part_top_side_bot[1] = block_iter(stacks[side], len, part_top_side_bot, above_than);
 	part_top_side_bot[3] = len - part_top_side_bot[1];
 	sent = block_rotate_iter(stacks, block, part_top_side_bot, if_top_push);
+//	print_stacks(stacks);
 	block_reverse_iter(stacks, block, &start_side, until);	
+//	print_stacks(stacks);
 	return (sent);
 }
 
 
-void	quicksort(t_stack **stacks)
+void	quicksort(t_stack **stacks, int side, int len)
 {
 	int		partition;
 	int		sent;
 	int		remain;
-
+//	static int  i = 0;
+//	i++;
 	print_stacks(stacks);
 	if (is_block_sorted(stacks, side, len))
 	{
+	//	ft_printf("level: %d side %c sorted\n", i, side + 'a');
 		if (side == 1)
 			while (len--)
 				push(0, stacks, 1);
 		return ;
 	}
-	if (len == 2)
+/*	if (len == 4)
+	{
+		push(OPP(side), stacks, 1);
+		push(OPP(side), stacks, 1);
+		if (!is_block_sorted(stacks, side, 2) && !is_block_sorted(stacks, OPP(side), 2))
+		{
+				swap(-1, stacks, 1);
+				push(side, stacks, 1);
+		}
+		else
+		{
+			quicksort(stacks, 0, 2);
+			quicksort(stacks, 1, 2);
+		}
+		return ;
+	}
+*/	if (len == 2)
 	{
 		swap(side, stacks, 1);
 		if (side == 1)
@@ -209,11 +229,26 @@ void	quicksort(t_stack **stacks)
 				push(0, stacks, 1);
 		return ;
 	}
-	partition = best_partition(stacks, side, len);
+/*	if (len == 1)
+	{
+		if(side == 1)
+			push(0, stacks, 1);
+		return ;
+
+	}
+*/	partition = best_partition(stacks, side, len);
+//	ft_printf("side: %d partition: %d\n", side, partition);
 	sent = push_top(stacks, side, len, partition);
 	remain = len - sent;
-	quicksort(stacks, 0, remain);
-	quicksort(stacks, 1, sent);
+
+	if (side == 0)
+		quicksort(stacks, side, remain);
+	quicksort(stacks, OPP(side), sent);
+	if (side == 1)
+		quicksort(stacks, side, remain);
+
+
+//	ft_printf("level: %d side %c remain: %d\n", i, side + 'a', remain);
 }
 
 int		main(int ac, char **av)
@@ -221,7 +256,6 @@ int		main(int ac, char **av)
 	int		*nums;
 	int		len;
 	t_stack	*stacks[2];
-	t_block	block;
 
 	stacks[0] = init();
 	stacks[1] = init();
@@ -236,10 +270,9 @@ int		main(int ac, char **av)
 		return (0);
 	}
 	populate_stack(nums, len, stacks);
-
-	block.side = 0;
-	block.len = len;
-	quicksort(stacks, block);
-
+//	ft_printf("%d\n", is_block_sorted(stacks, 0, len));
+//	ft_printf("%d\n", best_partition(stacks, 0, len));
+	quicksort(stacks, 0, len);
+//	print_stacks(stacks);
 	return (0);
 }
