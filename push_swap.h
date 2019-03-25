@@ -6,13 +6,14 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/18 14:58:22 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/25 11:36:27 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# define OPP(side) (side + 1) % 2
 # include <libft.h>
 # include <sys/types.h>
 # include <sys/uio.h>
@@ -40,12 +41,22 @@ typedef struct		s_queue {
 
 typedef struct		s_block {
 	int				side;
-	int				start;
+	t_node			*start;
+	t_node			*end;
 	int				len;
-	int				send;
-	int				remain;
 	int				part;
-	int				loc;	
+	int				sent;
+	int				kept;
+	t_node			*push_start;
+	t_node			*push_end;
+	t_node			*keep_start;
+	t_node			*keep_end;
+	int				push_above;
+	int				push_below;	
+	int				keep_above;
+	int				keep_below;
+	char			*msg;
+	void			*set_var;
 }					t_block;
 
 
@@ -75,8 +86,18 @@ void				*peek_q(struct s_queue *queue);
 int					stack_len(t_stack *stack);
 void				print_stacks(t_stack **stacks);
 int					bigger_than(t_stack *stack, void *p_part, t_stack *og, int len);
-int					find_best_part(t_stack *stack, void *p_part_bigger, t_stack *og, int len);
-int					best_partition(t_stack **stack, int side, int len);
-int					block_iter(t_stack *stack, int len, void *data, int (*f)(t_stack*, void*, t_stack*, int));
-int					above_than(t_stack *stack, void *p_part_bigger_side, t_stack *og, int len);
+int					find_best_part(t_node *iter, t_block *block);
+void				assign_best_partition(t_block *block);
+int					block_iter(t_block *block, int (*f)(t_node*, t_block*));
+int					inc_comp(t_node *iter, t_block *block);
+int					dec_comp(t_node *iter, t_block *block);
+int					set_remain_start(t_node *iter, t_block *block);
+int					above_than(t_node *iter, t_block *block);
+void				set_block(t_stack **stacks, t_block *block);
+t_node				*block_iter_find(t_block *block, char *var_name, int (*f)(t_node*, t_block*));
+int					iter_stop();
+int					iter_count();
+int					iter_continue();
+int					piece_iter(t_node *start, t_node *end, t_block *block, int (*f)(t_node*, t_block*));
+int					can_push(t_node *iter, t_block *block);
 #endif

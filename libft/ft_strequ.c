@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:49:58 by bvilla            #+#    #+#             */
-/*   Updated: 2018/11/05 20:07:17 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/21 11:24:28 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 int		ft_strequ(char const *s1, char const *s2)
 {
-	return (s1 && s2 && ft_strcmp(s1, s2) ? 0 : 1);
+	if (!s1 || !s2)
+		return (0);
+	return (!ft_strcmp(s1, s2));
 }
