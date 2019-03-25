@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/25 11:36:27 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/25 13:57:02 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct		s_block {
 	t_node			*push_end;
 	t_node			*keep_start;
 	t_node			*keep_end;
+	t_node			*first_push;
+	t_node			*last_push;
 	int				push_above;
 	int				push_below;	
 	int				keep_above;

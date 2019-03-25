@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 16:32:30 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/21 20:48:06 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/25 12:30:35 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int		inc_comp(t_node *iter, t_block *block)
 	top_vals[0] = iter->val;
 	top_vals[1] = iter->next->val;
 	if (top_vals[0] < top_vals[1])
-		return (0);
+		return (iter_continue());
 	else
-		return (1);
+		return (iter_count());
 }
 int		dec_comp(t_node *iter, t_block *block)
 {
@@ -64,8 +64,8 @@ int		dec_comp(t_node *iter, t_block *block)
 	top_vals[0] = iter->val;
 	top_vals[1] = iter->next->val;
 	if (top_vals[0] > top_vals[1])
-		return (0);
+		return (iter_continue());
 	else
-		return (1);
+		return (iter_count());
 }
 

@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:13:17 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/25 11:23:54 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/25 15:32:50 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	set_block(t_stack **stacks, t_block *block)
 	set_temp_value(block, &(block->keep_end), "keep_end");
 	set_temp_value(block, &(block->end), "end");
 
-	ft_printf("loc: %d\n", loc->val);
+//	ft_printf("LOC: %d\n", loc->val);
 
 	if (loc == block->start)
 	{
@@ -90,9 +90,11 @@ void	set_block(t_stack **stacks, t_block *block)
 	else
 	{
 		block->msg = "keep";
-		block->keep_below = piece_iter(loc->next, block->push_end, block, can_pushkeep);
+		if (block->keep_above != block->kept)
+			block->keep_below = piece_iter(loc->next, block->push_end, block, can_pushkeep);
 		block->msg = "push";
-		block->push_below = piece_iter(loc->next, block->push_end, block, can_pushkeep);
+		if (block->push_above != block->sent)
+			block->push_below = piece_iter(loc->next, block->push_end, block, can_pushkeep);
 	}
 
 }

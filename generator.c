@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#define NUM 500
+#define NUM 32
 int main()
 {
     int array[NUM];

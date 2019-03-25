@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/25 12:09:30 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/25 16:05:49 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,40 +33,41 @@ void	print_block(t_block *block)
 	ft_printf("push above: %d\n", block->push_above);
 
 	ft_printf("push below: %d\n", block->push_below);
+	ft_printf("msg: %s\n", block->msg);
 }
 
 
 void		stack_rotate_iter(t_stack **stacks, t_block *block, int (*f)(t_stack**, t_block*))
 {
+	int		ret;
 
-	while (f(stacks, block))
-		rotate(block->side, stacks, 1);
-}
-/*
-int		block_reverse_iter(t_stack **stacks, t_block block, void *data, 
-		int (*f)(t_stack**, int, void*))
-{
-	int		i;
-	int		side;
-	int		top_val;
-	int		moved;
-
-	if(!data)
-		return (0);
-	side = block.side;
-	i = 0;
-	while (i < block.len)
+	while (stacks[block->side]->top)
 	{
-		if (!(moved = f(stacks, side, data)))
-			return (0);
-		else if (moved == 1)
-			reverse(side, stacks, 1);
-		i++;
+
+	//	if (block->push_end && block->push_end->val == 8 && block->start->val == 8)
+	//		exit(0);
+		if ((ret = f(stacks, block)) == iter_stop())
+		{
+
+			return ;
+		}
+		if (ret == iter_continue())
+			rotate(block->side, stacks, 1);
 	}
-	return (1);
 }
 
-*/
+void		stack_reverse_iter(t_stack **stacks, t_block *block, int (*f)(t_stack**, t_block*))
+{
+	int		ret;
+
+	while (stacks[block->side]->top)
+	{
+		if ((ret = f(stacks, block)) == iter_stop())
+			return ;
+		reverse(block->side, stacks, 1);
+	}
+}
+
 int		is_block_sorted(t_block block)
 {
 	block.len--;
@@ -76,33 +77,54 @@ int		is_block_sorted(t_block block)
 
 }
 
-
+int		find_start(t_stack **stacks, t_block *block)
+{
+//	ft_printf("start: %d\n", block->start->val);
+//	ft_printf("side: %d\n", block->side);
+	if (stacks[block->side]->top == block->start)
+		return (iter_stop());
+	return (iter_continue());
+}
 int		if_top_push(t_stack **stacks, t_block *block)
 {
 	t_node	*curr;
-	
+	int		ret;
+
+	ret = iter_continue();
 	curr = stacks[block->side]->top;
-	ft_printf("pushing down\n");
+//	print_stacks(stacks);
+//	print_block(block);
 /*
 	if (block_len == stack_len(stacks[side]))
 		see if rotate or reverse rotate is fastest way to get where you wanna go
 */
 	if(can_push(curr, block))
+	{
+		if (!block->first_push)
+			block->first_push = curr;
+		block->last_push = curr;
 		push(OPP(block->side), stacks, 1);
+		ret = iter_count();
+	}
 	if(ft_strstr(block->msg, "up") && curr == block->push_start)
-		return (0);
+		ret = iter_stop();
 	if(ft_strstr(block->msg, "down") && curr == block->push_end)
 	{
-		return (0);
-//		reverse(block->side, stacks, 1);
+		if (block->push_end == block->end)
+			reverse(block->side, stacks, 1);
+
+		ret = iter_stop();
 	}
-	return (1);
+	//	if (curr->val == 8 && block->start->val == 8 && block->end->val == 9)
+	//		exit(0);
+	return (ret);
 }
 
 
 void	push_direction(t_stack **stacks, t_block *block, char *direction)
 {
 	block->msg = direction;
+//print_block(block);
 	if (ft_strstr(direction, "down"))
 		stack_rotate_iter(stacks, block, if_top_push);
 	if (ft_strstr(direction, "up"))
@@ -137,38 +159,55 @@ void	quicksort(t_stack **stacks, t_block *block)
 	t_block	keep_block;
 	t_block	sent_block;
 
+	ft_bzero(&keep_block, sizeof(t_block));
+	ft_bzero(&sent_block, sizeof(t_block));
+/*
+	static int i = 0;
+	if (i++ > 5)
+		return;
+*/
+
 	//print_stacks(stacks);
 	if (is_block_sorted(*block))
 	{
-		//rewind to start
+		stack_reverse_iter(stacks, block, find_start);
 		if (block->side == 1)
 			while (block->len--)
 				push(0, stacks, 1);
+		
+//print_stacks(stacks);
 		return ;
 	}
 	if (block->len == 2)
 	{
-		//rewind to start
+		stack_reverse_iter(stacks, block, find_start);
 		swap(block->side, stacks, 1);
 		if (block->side == 1)
 			while (block->len--)
 				push(0, stacks, 1);
+//print_stacks(stacks);
 		return ;
 	}
 	assign_best_partition(block);
 	block->sent = block->len / 2;
 	block->kept = block->len - block->sent;
 	push_top(stacks, block);
+
+//print_stacks(stacks);
 	keep_block.side = block->side;
 	keep_block.len = block->kept;
 	keep_block.start = block->keep_start;
-	quicksort(stacks, &keep_block);
-
 	sent_block.side = OPP(block->side);
 	sent_block.len = block->sent;
-	sent_block.start = block->push_start;
+	sent_block.start = block->last_push;
+
+	if (block->side == 0)
+		quicksort(stacks, &keep_block);
 	quicksort(stacks, &sent_block);
-}
+	if (block->side == 1)
+		quicksort(stacks, &keep_block);
+
+	}
 
 int		main(int ac, char **av)
 {
@@ -195,7 +234,8 @@ int		main(int ac, char **av)
 	block.len = len;
 	block.start = stacks[0]->top;
 		
+//	print_stacks(stacks);	
 	quicksort(stacks, &block);
-	print_stacks(stacks);	
+//	print_stacks(stacks);
 	return (0);
 }
