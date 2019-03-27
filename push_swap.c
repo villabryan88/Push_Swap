@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 00:35:04 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 00:58:21 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,8 @@ print_stacks(stacks);
 	push_top(stacks, block);
 
 print_stacks(stacks);
-	if(block->side == 0 && block->kept == stack_len(stacks[0]))
-		keep_block.start = stacks[0]->top;
+	if(block->alone/*block->side == 0 && block->kept == stack_len(stacks[0])*/)
+		keep_block.start = stacks[block->side]->top;
 	else
 		keep_block.start = block->keep_start;
 	keep_block.side = block->side;
