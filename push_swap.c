@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 00:58:21 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 01:39:05 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,13 @@ void	push_direction(t_stack **stacks, t_block *block, char *direction)
 	if (ft_strstr(direction, "down"))
 	{
 		if (stacks[block->side]->top == block->push_end && block->sent > 1)
-			block->push_end = block->push_end->prev;
+			block->push_end = prev_push(block);
 		stack_rotate_iter(stacks, block, if_top_push);
 	}
 	if (ft_strstr(direction, "up"))
 	{
 		if (stacks[block->side]->top == block->push_start && block->sent > 1)
-			block->push_start = block->push_start->next;
+			block->push_start = next_push(block);
 		stack_reverse_iter(stacks, block, if_top_push);
 	}
 }
@@ -143,7 +143,7 @@ void	push_top(t_stack **stacks, t_block *block)
 {
 
 	set_block(stacks, block);
-	print_block(block);
+//print_block(block);
 	
 	if (block->push_above == 0 || 
 			(!block->in_pushfield && block->keep_above + block->push_above + block->push_above - 1 >= block->keep_below + block->push_below))
@@ -184,7 +184,7 @@ void	quicksort(t_stack **stacks, t_block *block)
 			while (block->len--)
 				push(0, stacks, 1);
 		
-print_stacks(stacks);
+//print_stacks(stacks);
 		return ;
 	}
 	if (block->len == 2)
@@ -194,7 +194,7 @@ print_stacks(stacks);
 		if (block->side == 1)
 			while (block->len--)
 				push(0, stacks, 1);
-print_stacks(stacks);
+//print_stacks(stacks);
 		return ;
 	}
 	assign_best_partition(block);
@@ -202,7 +202,7 @@ print_stacks(stacks);
 	block->kept = block->len - block->sent;
 	push_top(stacks, block);
 
-print_stacks(stacks);
+//print_stacks(stacks);
 	if(block->alone/*block->side == 0 && block->kept == stack_len(stacks[0])*/)
 		keep_block.start = stacks[block->side]->top;
 	else
@@ -242,7 +242,7 @@ int		main(int ac, char **av)
 		return (0);
 	}
 	populate_stack(nums, len, stacks);
-
+//print_stacks(stacks);
 	block.side = 0;
 	block.len = len;
 	block.start = stacks[0]->top;

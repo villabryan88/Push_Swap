@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:13:17 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 00:43:02 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 01:38:10 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,46 +80,46 @@ void	set_block(t_stack **stacks, t_block *block)
 
 //	ft_printf("LOC: %d\n", loc->val);
 
-	if (loc == block->start && !block->alone)
+/*	if (loc == block->start && !block->alone)
 	{
 		block->keep_above = 0;
 		block->push_above = 0;
 	}
 	else
 	{
-		block->msg = "keep";
-		if (block->alone && loc == block->push_start && block->sent > 1)
+*/		block->msg = "keep";
+		if (/*block->alone && */loc == block->push_start && block->sent > 1)
 			block->keep_above = piece_iter(next_push(block), loc, block, can_pushkeep);
 		else
 			block->keep_above = piece_iter(block->push_start, loc, block, can_pushkeep);
 	
 		block->msg = "push";
-		if (block->alone && loc == block->push_start && block->sent > 1)
+		if (/*block->alone && */loc == block->push_start && block->sent > 1)
 			block->push_above = piece_iter(next_push(block), loc, block, can_pushkeep);
 		else
 			block->push_above = piece_iter(block->push_start, loc, block, can_pushkeep);
 
 
-	}
+//	}
 
-	if (loc == block->end && !block->alone)
+/*	if (loc == block->end && !block->alone)
 	{
 		block->keep_below = 0;
 		block->push_below = 0;
 	}
 	else
 	{
-		block->msg = "keep";
-		if (block->alone && loc == block->push_end && block->sent > 1)
+*/		block->msg = "keep";
+		if (/*block->alone && */loc == block->push_end && block->sent > 1)
 			block->keep_below = piece_iter(loc, prev_push(block), block, can_pushkeep);
 		else
 			block->keep_below = piece_iter(loc, block->push_end, block, can_pushkeep);
 		block->msg = "push";
-		if (block->alone && loc == block->push_end && block->sent > 1)
+		if (/*block->alone && */loc == block->push_end && block->sent > 1)
 			block->push_below = piece_iter(loc, prev_push(block), block, can_pushkeep);
 		else
 			block->push_below = piece_iter(loc, block->push_end, block, can_pushkeep);
-	}
+//	}
 
 }
 /*
