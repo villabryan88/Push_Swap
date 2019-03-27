@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 01:39:05 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 13:51:26 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,10 +175,11 @@ void	quicksort(t_stack **stacks, t_block *block)
 	if (i++ > 2)
 		return;
 */
-
+	
 	//print_stacks(stacks);
 	if (is_block_sorted(*block))
 	{
+//ft_printf("side: %d\nlen: %d\nstart: %d\n", block->side, block->len, block->start->val);
 		stack_reverse_iter(stacks, block, find_start);
 		if (block->side == 1)
 			while (block->len--)
@@ -195,6 +196,18 @@ void	quicksort(t_stack **stacks, t_block *block)
 			while (block->len--)
 				push(0, stacks, 1);
 //print_stacks(stacks);
+		return ;
+	}
+	if (block->len == 3 && block->alone)
+	{
+		if(stacks[0]->top->val == block->max)
+			rotate(block->side, stacks, 1);
+		else if (stacks[0]->top->next->val == block->max)
+			reverse(block->side, stacks, 1);
+		keep_block.side = block->side;
+		keep_block.len = 2;
+		keep_block.start = stacks[block->side]->top;
+		quicksort(stacks, &keep_block);
 		return ;
 	}
 	assign_best_partition(block);
@@ -246,7 +259,8 @@ int		main(int ac, char **av)
 	block.side = 0;
 	block.len = len;
 	block.start = stacks[0]->top;
-
+	assign_best_partition(&block);
+	set_block(stacks, &block);
 
 
 //	print_stacks(stacks);	
