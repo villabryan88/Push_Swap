@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 13:57:11 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 14:09:22 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,9 +259,8 @@ int		main(int ac, char **av)
 	block.side = 0;
 	block.len = len;
 	block.start = stacks[0]->top;
-	assign_best_partition(&block);
-	set_block(stacks, &block);
-
+	block.alone = 1;
+	block.max = block_max(&block);
 
 //	print_stacks(stacks);	
 	quicksort(stacks, &block);
