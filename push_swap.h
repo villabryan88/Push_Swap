@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/26 23:33:19 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/26 23:51:02 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,5 @@ t_node				*next_push(t_block *block);
 t_node				*prev_push(t_block *block);
 int					block_min(t_block *block);
 int					block_max(t_block *block);
+int					piece_len(t_node *start, t_node *end);
 #endif

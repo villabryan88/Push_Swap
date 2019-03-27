@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/26 23:20:20 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 00:35:04 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,30 @@ void	print_block(t_block *block)
 	ft_printf("keep_start: %d\n", block->keep_start->val);
 	ft_printf("keep_end: %d\n", block->keep_end->val);
 
+	ft_printf("push above: %d\n", block->push_above);
 	ft_printf("keep above: %d\n", block->keep_above);
+	ft_printf("push below: %d\n", block->push_below);
 
 	ft_printf("keep_below: %d\n", block->keep_below);
-	ft_printf("push above: %d\n", block->push_above);
-
-	ft_printf("push below: %d\n", block->push_below);
 	ft_printf("msg: %s\n", block->msg);
 	ft_printf("in_pushfield: %d\n", block->in_pushfield);
 	ft_printf("alone: %d\n", block->alone);
+	ft_printf("min: %d\n", block->min);
+	ft_printf("max: %d\n", block->max);
 }
 
 
 void		stack_rotate_iter(t_stack **stacks, t_block *block, int (*f)(t_stack**, t_block*))
 {
 	int		ret;
-int		i = 0;
+//int		i = 0;
 
 	while (stacks[block->side]->top)
 	{
-i++;
+/*i++;
 if (i > 30)
 break;
-
+*/
 		if ((ret = f(stacks, block)) == iter_stop())
 		{
 
@@ -63,13 +64,13 @@ break;
 void		stack_reverse_iter(t_stack **stacks, t_block *block, int (*f)(t_stack**, t_block*))
 {
 	int		ret;
-int	i = 0;
+//int	i = 0;
 	while (stacks[block->side]->top)
 	{
-i++;
+/*i++;
 if (i > 30)
 break;
-
+*/
 		if ((ret = f(stacks, block)) == iter_stop())
 			return ;
 		reverse(block->side, stacks, 1);

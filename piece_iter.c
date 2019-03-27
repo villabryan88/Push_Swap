@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:35:27 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/26 23:37:08 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 00:33:05 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,24 @@ int		piece_iter(t_node *start, t_node *end, t_block *block, int (*f)(t_node*, t_
 	return (counter);
 }
 
-int		in_block(t_node *find, t_block *block)
+int		piece_len(t_node *start, t_node *end)
 {
 	int		i;
 	t_node	*iter;
-
-	iter = block->start;
-	while (iter != block->end)
+	
+	i = 1;
+	iter = start;
+	while (iter != end)
 	{
-		if(iter == find)
-			return (1);
+		i++;
 		iter = iter->next;
 	}
-	if(iter == find)
-		return (1);
+	return (i);
+}
 
-	return (0);
+int		in_block(t_node *find, t_block *block)
+{
+	return(find->val >= block->min && find->val <= block->max);
 }
 
 int		in_field(t_node *find, t_node *start, t_node *end)

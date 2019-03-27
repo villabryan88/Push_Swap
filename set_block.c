@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:13:17 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/26 23:34:08 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 00:43:02 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		can_push(t_node *iter, t_block *block)
 {
-	if (block->side == 0 && iter->val < block->part)
+	if (block->side == 0 && iter->val < block->part && in_block(iter, block))
 		return (1);
-	if (block->side == 1 && iter->val > block->part)
+	if (block->side == 1 && iter->val > block->part && in_block(iter,block))
 		return (1);
 	return (0);
 }
@@ -24,7 +24,7 @@ int		can_push(t_node *iter, t_block *block)
 int		can_pushkeep(t_node *iter, t_block *block)
 {
 	if (ft_strstr(block->msg, "push"))
-		return(can_push(iter, block) && in_block(iter, block));
+		return(can_push(iter, block) /*&& in_block(iter, block)*/);
 	else if (ft_strstr(block->msg, "keep"))
 		return(!can_push(iter, block));
 	return (0);
@@ -62,6 +62,8 @@ void	set_block(t_stack **stacks, t_block *block)
 
 
 	block->alone = block->len == stack_len(stacks[block->side]);
+	block->min = block_min(block);
+	block->max = block_max(block);
 
 	loc = stacks[block->side]->top;
 	set_temp_value(block, &(block->push_start), "push_start");
@@ -69,13 +71,12 @@ void	set_block(t_stack **stacks, t_block *block)
 	set_temp_value(block, &(block->keep_start), "keep_start");
 	set_temp_value(block, &(block->keep_end), "keep_end");
 	set_temp_value(block, &(block->end), "end");
-	if (block->sent <= 2)
+	if (piece_len(block->push_start, block->push_end) <= 2)
 		block->in_pushfield = 0;
 	else
-		block->in_pushfield = in_field(stacks[0]->top, block->push_start->next, block->push_end->prev);
+		block->in_pushfield = in_field(stacks[block->side]->top, block->push_start->next, block->push_end->prev);
 
-	block->min = block_min(block);
-	block->max = block_max(block);
+
 
 //	ft_printf("LOC: %d\n", loc->val);
 
@@ -96,10 +97,9 @@ void	set_block(t_stack **stacks, t_block *block)
 		if (block->alone && loc == block->push_start && block->sent > 1)
 			block->push_above = piece_iter(next_push(block), loc, block, can_pushkeep);
 		else
-		{
 			block->push_above = piece_iter(block->push_start, loc, block, can_pushkeep);
-			ft_printf("man wtf\n\n");
-		}
+
+
 	}
 
 	if (loc == block->end && !block->alone)
