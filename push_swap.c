@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 13:51:26 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 13:57:11 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,5 +266,6 @@ int		main(int ac, char **av)
 //	print_stacks(stacks);	
 	quicksort(stacks, &block);
 //	print_stacks(stacks);
+
 	return (0);
 }
