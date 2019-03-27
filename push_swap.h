@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/25 13:57:02 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/26 23:33:19 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,16 @@ typedef struct		s_block {
 	t_node			*keep_end;
 	t_node			*first_push;
 	t_node			*last_push;
+	int				in_pushfield;
 	int				push_above;
 	int				push_below;	
 	int				keep_above;
 	int				keep_below;
 	char			*msg;
 	void			*set_var;
+	int				alone;
+	int				min;
+	int				max;
 }					t_block;
 
 
@@ -102,4 +106,10 @@ int					iter_count();
 int					iter_continue();
 int					piece_iter(t_node *start, t_node *end, t_block *block, int (*f)(t_node*, t_block*));
 int					can_push(t_node *iter, t_block *block);
+int					in_block(t_node *find, t_block *block);
+int					in_field(t_node *find, t_node *start, t_node *end);
+t_node				*next_push(t_block *block);
+t_node				*prev_push(t_block *block);
+int					block_min(t_block *block);
+int					block_max(t_block *block);
 #endif
