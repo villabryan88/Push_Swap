@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 14:29:05 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/13 13:52:21 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 14:24:44 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,32 +78,35 @@ void	print_stack(t_stack *stack)
 	free (str);
 }
 
-void	print_stacks(t_stack **stacks)
+void	print_stacks(t_stack **stacks, int debug)
 {
 	char **a_str;
 	char **b_str;
 	char **a;
 	char **b;
 
-	a = (char**)stack_convert_string(stacks[0]);
-	a_str = ft_strsplit((char*)a, '\n');
-	free(a);
-	a = (char**)stack_convert_string(stacks[1]);
-	b_str = ft_strsplit((char*)a, '\n');
-	free(a);
-	a = a_str;
-	b = b_str;
-	ft_printf("%10s    %10s\n", "stack a", "stack b");
-	ft_printf("%10s    %10s\n", "-------", "-------");
-	while (*a || *b)
+	if (debug)
 	{
-		ft_printf("%10s    %10s\n", *a ? *a : "", *b ? *b : "");
-		if (*a)
-			a++;
-		if (*b)
-			b++;
+		a = (char**)stack_convert_string(stacks[0]);
+		a_str = ft_strsplit((char*)a, '\n');
+		free(a);
+		a = (char**)stack_convert_string(stacks[1]);
+		b_str = ft_strsplit((char*)a, '\n');
+		free(a);
+		a = a_str;
+		b = b_str;
+		ft_printf("%10s    %10s\n", "stack a", "stack b");
+		ft_printf("%10s    %10s\n", "-------", "-------");
+		while (*a || *b)
+		{
+			ft_printf("%10s    %10s\n", *a ? *a : "", *b ? *b : "");
+			if (*a)
+				a++;
+			if (*b)
+				b++;
+		}
+		ft_strarrdel(a_str);
+		ft_strarrdel(b_str);
 	}
-	ft_strarrdel(a_str);
-	ft_strarrdel(b_str);
 }
 

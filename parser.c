@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:19:15 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 00:33:27 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 14:26:04 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,19 @@ int *arr_str_to_int(char **str, int *len)
 	return (arr);
 }
 
-int		*parse_nums(int ac, char **av, int *len)
+int		*parse_nums(int ac, char **av, int *len, int *debug)
 {
 	int		*nums;
 	char	**str_nums;
 	char	*str;
 
 	str = ft_strnew(1);
+	if (ft_strequ("-v", av[1]))
+	{
+		*debug = 1;
+		av++;
+		ac--;
+	}
 	while (--ac)
 	{
 		str = ft_strjoin_free(str, *(++av), 1, 0);

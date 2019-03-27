@@ -6,37 +6,40 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:03:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 14:09:22 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 14:29:48 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
 
-void	print_block(t_block *block)
+void	print_block(t_block *block, int	debug)
 {
-	ft_printf("side: %d\n", block->side);
-	ft_printf("start: %d\n", block->start->val);
-	ft_printf("end: %d\n", block->end->val);
-	ft_printf("len: %d\n", block->len);
-	ft_printf("part: %d\n", block->part);
-	ft_printf("sent: %d\n", block->sent);
-	ft_printf("kept: %d\n", block->kept);
-	ft_printf("push_start: %d\n", block->push_start->val);
-	ft_printf("push_end: %d\n", block->push_end->val);
-	ft_printf("keep_start: %d\n", block->keep_start->val);
-	ft_printf("keep_end: %d\n", block->keep_end->val);
-
-	ft_printf("push above: %d\n", block->push_above);
-	ft_printf("keep above: %d\n", block->keep_above);
-	ft_printf("push below: %d\n", block->push_below);
-
-	ft_printf("keep_below: %d\n", block->keep_below);
-	ft_printf("msg: %s\n", block->msg);
-	ft_printf("in_pushfield: %d\n", block->in_pushfield);
-	ft_printf("alone: %d\n", block->alone);
-	ft_printf("min: %d\n", block->min);
-	ft_printf("max: %d\n", block->max);
+	if (debug)
+	{
+		ft_printf("side: %d\n", block->side);
+		ft_printf("start: %d\n", block->start->val);
+		ft_printf("end: %d\n", block->end->val);
+		ft_printf("len: %d\n", block->len);
+		ft_printf("part: %d\n", block->part);
+		ft_printf("sent: %d\n", block->sent);
+		ft_printf("kept: %d\n", block->kept);
+		ft_printf("push_start: %d\n", block->push_start->val);
+		ft_printf("push_end: %d\n", block->push_end->val);
+		ft_printf("keep_start: %d\n", block->keep_start->val);
+		ft_printf("keep_end: %d\n", block->keep_end->val);
+	
+		ft_printf("push above: %d\n", block->push_above);
+			ft_printf("keep above: %d\n", block->keep_above);
+		ft_printf("push below: %d\n", block->push_below);
+	
+		ft_printf("keep_below: %d\n", block->keep_below);
+			ft_printf("msg: %s\n", block->msg);
+		ft_printf("in_pushfield: %d\n", block->in_pushfield);
+		ft_printf("alone: %d\n", block->alone);
+		ft_printf("min: %d\n", block->min);
+		ft_printf("max: %d\n", block->max);
+	}
 }
 
 
@@ -139,11 +142,11 @@ void	push_direction(t_stack **stacks, t_block *block, char *direction)
 	}
 }
 
-void	push_top(t_stack **stacks, t_block *block)
+void	push_top(t_stack **stacks, t_block *block, int debug)
 {
 
 	set_block(stacks, block);
-//print_block(block);
+	print_block(block, debug);
 	
 	if (block->push_above == 0 || 
 			(!block->in_pushfield && block->keep_above + block->push_above + block->push_above - 1 >= block->keep_below + block->push_below))
@@ -163,29 +166,22 @@ void	push_top(t_stack **stacks, t_block *block)
 }
 
 
-void	quicksort(t_stack **stacks, t_block *block)
+void	quicksort(t_stack **stacks, t_block *block, int debug)
 {
 	t_block	keep_block;
 	t_block	sent_block;
 
 	ft_bzero(&keep_block, sizeof(t_block));
 	ft_bzero(&sent_block, sizeof(t_block));
-/*
-	static int i = 0;
-	if (i++ > 2)
-		return;
-*/
-	
-	//print_stacks(stacks);
+
 	if (is_block_sorted(*block))
 	{
-//ft_printf("side: %d\nlen: %d\nstart: %d\n", block->side, block->len, block->start->val);
 		stack_reverse_iter(stacks, block, find_start);
 		if (block->side == 1)
 			while (block->len--)
 				push(0, stacks, 1);
 		
-//print_stacks(stacks);
+	print_stacks(stacks, debug);
 		return ;
 	}
 	if (block->len == 2)
@@ -195,7 +191,7 @@ void	quicksort(t_stack **stacks, t_block *block)
 		if (block->side == 1)
 			while (block->len--)
 				push(0, stacks, 1);
-//print_stacks(stacks);
+	print_stacks(stacks, debug);
 		return ;
 	}
 	if (block->len == 3 && block->alone)
@@ -207,15 +203,15 @@ void	quicksort(t_stack **stacks, t_block *block)
 		keep_block.side = block->side;
 		keep_block.len = 2;
 		keep_block.start = stacks[block->side]->top;
-		quicksort(stacks, &keep_block);
+		quicksort(stacks, &keep_block, debug);
 		return ;
 	}
 	assign_best_partition(block);
 	block->sent = block->len / 2;
 	block->kept = block->len - block->sent;
-	push_top(stacks, block);
+	push_top(stacks, block, debug);
 
-//print_stacks(stacks);
+	print_stacks(stacks, debug);
 	if(block->alone/*block->side == 0 && block->kept == stack_len(stacks[0])*/)
 		keep_block.start = stacks[block->side]->top;
 	else
@@ -228,10 +224,10 @@ void	quicksort(t_stack **stacks, t_block *block)
 	sent_block.start = block->last_push;
 
 	if (block->side == 0)
-		quicksort(stacks, &keep_block);
-	quicksort(stacks, &sent_block);
+		quicksort(stacks, &keep_block, debug);
+	quicksort(stacks, &sent_block, debug);
 	if (block->side == 1)
-		quicksort(stacks, &keep_block);
+		quicksort(stacks, &keep_block, debug);
 
 	}
 
@@ -241,7 +237,9 @@ int		main(int ac, char **av)
 	int		len;
 	t_stack	*stacks[2];
 	t_block	block;
+	int		debug;
 
+	debug = 0;
 	stacks[0] = init();
 	stacks[1] = init();
 	if (ac == 1)
@@ -249,22 +247,22 @@ int		main(int ac, char **av)
 		ft_putstr("ERROR\n");
 		return (0);
 	}
-	if(!(nums = parse_nums(ac, av, &len)))
+	if(!(nums = parse_nums(ac, av, &len, &debug)))
 	{
 		ft_putstr("ERROR\n");
 		return (0);
 	}
 	populate_stack(nums, len, stacks);
-//print_stacks(stacks);
+	print_stacks(stacks, debug);
 	block.side = 0;
 	block.len = len;
 	block.start = stacks[0]->top;
 	block.alone = 1;
 	block.max = block_max(&block);
 
-//	print_stacks(stacks);	
-	quicksort(stacks, &block);
-//	print_stacks(stacks);
+
+	quicksort(stacks, &block, debug);
+	print_stacks(stacks, debug);
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:17:25 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/16 19:37:29 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 14:21:36 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int		main(int ac, char **av)
 	int		*nums;
 	int		len;
 	int		*order;
-	int		error;
 	int		ok;
+	int		debug;
 
 	ok = 1;
 
@@ -115,7 +115,7 @@ int		main(int ac, char **av)
 	{
 		return (0);
 	}
-	if(!(nums = parse_nums(ac, av, &len)))
+	if(!(nums = parse_nums(ac, av, &len, &debug)))
 	{
 		ft_putstr("ERROR\n");
 		return (0);

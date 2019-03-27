@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:35:23 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/26 23:51:02 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 14:25:05 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ int					push(int i, t_stack **stacks, int ver);
 int					rotate(int i, t_stack **stacks, int ver);
 int					reverse(int i, t_stack **stacks, int ver);
 int					*arr_str_to_int(char **str, int *len);
-int					*parse_nums(int ac, char **av, int *len);
+int					*parse_nums(int ac, char **av, int *len, int *debug);
 void				populate_stack(int *nums, int len, t_stack **stacks);
 struct				s_queue *init_q(void);
 void				enqueue(struct s_queue *queue, void *content);
 void				*dequeue(struct s_queue *queue);
 void				*peek_q(struct s_queue *queue);
 int					stack_len(t_stack *stack);
-void				print_stacks(t_stack **stacks);
+void				print_stacks(t_stack **stacks, int debug);
 int					bigger_than(t_stack *stack, void *p_part, t_stack *og, int len);
 int					find_best_part(t_node *iter, t_block *block);
 void				assign_best_partition(t_block *block);
