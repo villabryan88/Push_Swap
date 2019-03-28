@@ -6,7 +6,7 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:17:25 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 22:44:04 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/28 13:41:31 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int		do_instruction(char *s, t_stack **stacks)
 		return (0);
 	else if (len == 3)
 	{
-		if (s[0] != 'r' || s[1] != 'r' || (s[2] != 'a' && s[2] != 'b'))
+		if (s[0] != 'r' || s[1] != 'r' || (s[2] != 'a' && s[2] != 'b' &&
+											s[2] != 'r'))
 			return (0);
 		else
 			return (reverse(s[2] - 'a', stacks, 0));
