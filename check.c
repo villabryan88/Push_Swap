@@ -6,12 +6,12 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 20:37:02 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 00:41:44 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 19:38:16 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
-# define MAP_SIZE 500
+#define MAP_SIZE 500
 
 void	delete_map(t_list *map[MAP_SIZE])
 {
@@ -39,7 +39,7 @@ int		check_repeat(int *nums, int len)
 		hash = (unsigned int)nums[i] % MAP_SIZE;
 		if (map[hash])
 		{
-			if(ft_lstsearch(map[hash], nums + i, sizeof(nums[i])))
+			if (ft_lstsearch(map[hash], nums + i, sizeof(nums[i])))
 			{
 				delete_map(map);
 				return (1);

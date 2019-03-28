@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 13:42:48 by bvilla            #+#    #+#             */
-/*   Updated: 2019/02/20 13:55:52 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 20:38:52 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_elemval(void *arr, size_t size)
 	i = 0;
 	place = 1;
 	sum = 0;
-	while(i < size)
+	while (i < size)
 	{
 		sum += ((unsigned char*)arr)[i] * place;
 		place *= 256;

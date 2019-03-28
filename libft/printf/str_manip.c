@@ -6,25 +6,12 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:40:10 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/04 15:40:39 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 20:37:54 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_printf.h>
 
-/*
-char	*ft_strjoin_free(char *s1, char *s2, int f1, int f2)
-{
-	char	*ret;
-
-	ret = ft_strjoin(s1, s2);
-	if (f1)
-		free(s1);
-	if (f2)
-		free(s2);
-	return (ret);
-}
-*/
 void	adj_width(t_arg *arg)
 {
 	unsigned int	len;

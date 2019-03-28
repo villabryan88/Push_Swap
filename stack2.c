@@ -6,13 +6,13 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 14:29:05 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 14:24:44 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 22:57:42 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-t_node	*new_node(int	val)
+t_node	*new_node(int val)
 {
 	t_node *new;
 
@@ -25,12 +25,12 @@ t_node	*new_node(int	val)
 
 int		stack_len(t_stack *stack)
 {
-	t_node *start;
-	t_node *i;
+	t_node	*start;
+	t_node	*i;
 	int		c;
 
 	c = 0;
-	if (!stack || isEmpty(stack))
+	if (!stack || isempty(stack))
 		return (0);
 	start = stack->top;
 	i = start;
@@ -40,7 +40,6 @@ int		stack_len(t_stack *stack)
 		c++;
 	}
 	return (c + 1);
-
 }
 
 char	*stack_convert_string(t_stack *stack)
@@ -50,7 +49,7 @@ char	*stack_convert_string(t_stack *stack)
 	char	*str;
 
 	str = ft_memalloc(1);
-	if (!stack || isEmpty(stack))
+	if (!stack || isempty(stack))
 	{
 		free(str);
 		str = ft_strdup("empty\n");
@@ -61,11 +60,11 @@ char	*stack_convert_string(t_stack *stack)
 	while (i != start->prev)
 	{
 		str = ft_strjoin_free(str, ft_itoa(i->val), 1, 1);
-		str = ft_strjoin_free(str, "\n", 1, 0);		
+		str = ft_strjoin_free(str, "\n", 1, 0);
 		i = i->next;
 	}
 	str = ft_strjoin_free(str, ft_itoa(i->val), 1, 1);
-	str = ft_strjoin_free(str, "\n", 1, 0);	
+	str = ft_strjoin_free(str, "\n", 1, 0);
 	return (str);
 }
 
@@ -75,38 +74,5 @@ void	print_stack(t_stack *stack)
 
 	str = stack_convert_string(stack);
 	ft_printf("%s", str);
-	free (str);
+	free(str);
 }
-
-void	print_stacks(t_stack **stacks, int debug)
-{
-	char **a_str;
-	char **b_str;
-	char **a;
-	char **b;
-
-	if (debug)
-	{
-		a = (char**)stack_convert_string(stacks[0]);
-		a_str = ft_strsplit((char*)a, '\n');
-		free(a);
-		a = (char**)stack_convert_string(stacks[1]);
-		b_str = ft_strsplit((char*)a, '\n');
-		free(a);
-		a = a_str;
-		b = b_str;
-		ft_printf("%10s    %10s\n", "stack a", "stack b");
-		ft_printf("%10s    %10s\n", "-------", "-------");
-		while (*a || *b)
-		{
-			ft_printf("%10s    %10s\n", *a ? *a : "", *b ? *b : "");
-			if (*a)
-				a++;
-			if (*b)
-				b++;
-		}
-		ft_strarrdel(a_str);
-		ft_strarrdel(b_str);
-	}
-}
-

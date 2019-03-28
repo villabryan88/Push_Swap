@@ -6,13 +6,13 @@
 /*   By: bvilla <bvilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:19:15 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/27 14:26:04 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 20:50:23 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-int *arr_str_to_int(char **str, int *len)
+int		*arr_str_to_int(char **str, int *len)
 {
 	int		*arr;
 	int		i;
@@ -28,6 +28,16 @@ int *arr_str_to_int(char **str, int *len)
 	return (arr);
 }
 
+void	find_debug_flag(int *ac, char ***av, int *debug)
+{
+	if (ft_strequ("-v", (*av)[1]))
+	{
+		*debug = 1;
+		(*av)++;
+		(*ac)--;
+	}
+}
+
 int		*parse_nums(int ac, char **av, int *len, int *debug)
 {
 	int		*nums;
@@ -35,12 +45,7 @@ int		*parse_nums(int ac, char **av, int *len, int *debug)
 	char	*str;
 
 	str = ft_strnew(1);
-	if (ft_strequ("-v", av[1]))
-	{
-		*debug = 1;
-		av++;
-		ac--;
-	}
+	find_debug_flag(&ac, &av, debug);
 	while (--ac)
 	{
 		str = ft_strjoin_free(str, *(++av), 1, 0);
@@ -49,8 +54,7 @@ int		*parse_nums(int ac, char **av, int *len, int *debug)
 	str_nums = ft_strsplit(str, ' ');
 	free(str);
 	nums = arr_str_to_int(str_nums, len);
-
-	if(!is_valid_input(str_nums) || check_repeat(nums, *len))
+	if (!is_valid_input(str_nums) || check_repeat(nums, *len))
 	{
 		ft_strarrdel(str_nums);
 		free(nums);

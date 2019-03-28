@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 16:32:30 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/25 12:30:35 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 19:36:34 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		block_iter(t_block *block, int (*f)(t_node*, t_block*))
 	i = 0;
 	while (i < block->len)
 	{
-		if((ret = f(iter, block)) == iter_stop())
+		if ((ret = f(iter, block)) == iter_stop())
 			return (iter->val);
 		counter += ret;
 		iter = iter->next;
@@ -33,39 +33,17 @@ int		block_iter(t_block *block, int (*f)(t_node*, t_block*))
 	return (counter);
 }
 
-int		iter_stop()
+int		iter_stop(void)
 {
 	return (-1);
 }
 
-int		iter_count()
+int		iter_count(void)
 {
 	return (1);
 }
 
-int		iter_continue()
+int		iter_continue(void)
 {
 	return (0);
 }
-int		inc_comp(t_node *iter, t_block *block)
-{
-	int		top_vals[2];
-	top_vals[0] = iter->val;
-	top_vals[1] = iter->next->val;
-	if (top_vals[0] < top_vals[1])
-		return (iter_continue());
-	else
-		return (iter_count());
-}
-int		dec_comp(t_node *iter, t_block *block)
-{
-	int		top_vals[2];
-
-	top_vals[0] = iter->val;
-	top_vals[1] = iter->next->val;
-	if (top_vals[0] > top_vals[1])
-		return (iter_continue());
-	else
-		return (iter_count());
-}
-

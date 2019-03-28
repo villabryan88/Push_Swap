@@ -6,18 +6,18 @@
 /*   By: exam <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:36:11 by exam              #+#    #+#             */
-/*   Updated: 2019/03/05 21:15:47 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/03/27 22:43:47 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-int isEmpty_q(struct s_queue *queue)
+int				isempty_q(struct s_queue *queue)
 {
 	return (!queue->first);
 }
 
-struct s_queue *init_q(void)
+struct s_queue	*init_q(void)
 {
 	struct s_queue *new;
 
@@ -27,26 +27,26 @@ struct s_queue *init_q(void)
 	return (new);
 }
 
-void enqueue(struct s_queue *queue, void *content)
+void			enqueue(struct s_queue *queue, void *content)
 {
 	struct s_qnode *new_node;
 
 	new_node = (struct s_qnode*)malloc(sizeof(struct s_qnode));
 	new_node->content = content;
 	new_node->next = NULL;
-	if (isEmpty_q(queue))
+	if (isempty_q(queue))
 		queue->first = new_node;
 	else
 		queue->last->next = new_node;
 	queue->last = new_node;
 }
 
-void *dequeue(struct s_queue *queue)
+void			*dequeue(struct s_queue *queue)
 {
 	struct s_qnode	*first;
 	void			*content;
 
-	if (isEmpty_q(queue))
+	if (isempty_q(queue))
 		return (NULL);
 	first = queue->first;
 	content = first->content;
@@ -57,10 +57,9 @@ void *dequeue(struct s_queue *queue)
 	return (content);
 }
 
-void *peek_q(struct s_queue *queue)
+void			*peek_q(struct s_queue *queue)
 {
-	if (isEmpty_q(queue))
+	if (isempty_q(queue))
 		return (NULL);
 	return (queue->first->content);
 }
-
