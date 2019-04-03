@@ -29,6 +29,6 @@ run `./push_swap	[-v] [numbers to sort...]`
 
 Use the perl random number generator to make numbers to use as input:
 
-`arg=$(perl randomnumber.pl 32) | ./push_swap $arg`
+`arg=$(perl randomnumber.pl 32) ; ./push_swap $arg`
 
 The `-v` option enables the debug visualizer
